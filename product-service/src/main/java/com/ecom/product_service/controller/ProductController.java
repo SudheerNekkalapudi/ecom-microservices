@@ -30,6 +30,10 @@ public class ProductController {
     public Product getProduct(@PathVariable Long id) {
         return productService.getProductById(id);
     }
+    @GetMapping("/name/{name}")
+    public Product getProductByName(@PathVariable String name) {
+        return productService.getProductByName(name);
+    }
 
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
