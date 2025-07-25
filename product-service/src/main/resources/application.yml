@@ -2,10 +2,14 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: product-service
+
   datasource:
     url: jdbc:postgresql://localhost:5432/ecommicro
     username: postgres
     password: admin
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,26 +18,38 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-
-logging:
-  level:
-    org.springframework.web: INFO
-    org.hibernate.SQL: INFO
-    org.hibernate.type.descriptor.sql.BasicBinder: INFO
-  file:
-    name: D:/Eclipse Workspace/ecomm/product/log/product-service.log
+  zipkin:
+    base-url: http://localhost:9411
 
 management:
   endpoints:
     web:
       exposure:
         include: health, info, metrics, prometheus
+
+  tracing:
+    sampling:
+      probability: 1.0  # ✅ Corrected key from `robability` → `probability`
+
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.springframework.web: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
+
+  file:
+    name: D:/Eclipse Workspace/ecomm/product/log/product-service.log
+
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method

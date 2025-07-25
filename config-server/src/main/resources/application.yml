@@ -9,6 +9,6 @@ spring:
     config:
       server:
         git:
-          uri: file:///D:/Eclipse Workspace/ecomm/config-repo
-          default-label: main
+          uri: file:///D:/Eclipse Workspace/ecomm/ecom-microservices/config-repo
+          default-label: master
           clone-on-start: true
